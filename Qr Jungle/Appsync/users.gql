@@ -1,0 +1,36 @@
+input createOrderInput {
+	amount: String!
+	currency: String!
+}
+
+input editUrlInput {
+	qr_code_id: String
+	redirect_url: String
+}
+
+input purchaseQrInput {
+	qr_code_id: String!
+	price: String!
+	redirect_url: String
+}
+
+type Mutation {
+	updateFavourites(favourites: [String]): AWSJSON
+	puchaseQr(input: purchaseQrInput): AWSJSON
+	createOrder(input: createOrderInput): AWSJSON
+	editRedirectUrl(input: editUrlInput): AWSJSON
+	updateRedeemable(redeem_count: String): AWSJSON
+	requestCustomization(user_phone_number: String!, details: String): AWSJSON
+}
+
+type Query {
+	getCurrentUserDetails: AWSJSON
+	listMyFavourites: AWSJSON
+	listMyQrs: AWSJSON
+	listMyPrivateCategories: AWSJSON
+}
+
+schema {
+	query: Query
+	mutation: Mutation
+}

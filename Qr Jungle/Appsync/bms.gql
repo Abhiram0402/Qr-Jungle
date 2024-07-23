@@ -1,0 +1,98 @@
+enum ActionEnum {
+	DELETE
+	UPDATE
+}
+
+enum ApproveRejectEnum {
+	APPROVE
+	REJECT
+}
+
+enum StatusEnum {
+	ACTIVE
+	INACTIVE
+	PENDING
+}
+
+input addViewerInput {
+	category_id: String!
+	user_email_id: String
+}
+
+input approveOrRejectInput {
+	qr_code_id: String!
+	qr_code_category_name: String
+	qr_code_status: ApproveRejectEnum
+	price: String
+}
+
+input createCategoryInput {
+	category_name: String!
+	category_icon: String!
+}
+
+input createPrivateCategoryInput {
+	category_name: String
+	category_icon: String
+}
+
+input createUserInput {
+	user_name: String!
+	user_email_id: String!
+}
+
+input deleteBmsUserInput {
+	user_id: String!
+	user_email_id: String!
+}
+
+input deleteCategoryInput {
+	category_id: String!
+}
+
+input editCategoryInput {
+	category_id: String!
+	category_name: String
+	admin_action: ActionEnum
+	category_icon: String
+}
+
+input editUserInput {
+	user_email_id: String
+	user_name: String
+	user_status: StatusEnum
+	action: ActionEnum
+}
+
+type Mutation {
+	# BMS USERS APIs
+	createUser(input: createUserInput): AWSJSON
+	editUser(input: editUserInput): AWSJSON
+	createCategory(input: createCategoryInput): AWSJSON
+	deleteBMSUser(input: deleteBmsUserInput): AWSJSON
+	approveOrReject(input: approveOrRejectInput): AWSJSON
+	editcategory(input: editCategoryInput): AWSJSON
+	createPrivateCategory(input: createPrivateCategoryInput): AWSJSON
+	addViewer(input: addViewerInput): AWSJSON
+	addRedeemablesToUser(user_email_id: String!, redeem_count: String): AWSJSON
+	approveOrRejectPrivateQrs(input: approveOrRejectInput): AWSJSON
+}
+
+type Query {
+	# BMS USERS APIs
+	getCurrentUserDetails: AWSJSON
+	listUsers: AWSJSON
+	listAllQrs: AWSJSON
+	listCategories: AWSJSON
+	listQrByCategory(qr_code_category_name: String): AWSJSON
+	listApprovedQrs(nextToken: String): AWSJSON
+	listPurchasedQrs(nextToken: String): AWSJSON
+	listPendingApprovalQrs(nextToken: String): AWSJSON
+	listUntaggedQrs(nextToken: String): AWSJSON
+	listCustomRequests: AWSJSON
+}
+
+schema {
+	query: Query
+	mutation: Mutation
+}
